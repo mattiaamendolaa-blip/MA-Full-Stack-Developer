@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mattia Amendola — Full Stack Developer</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #F7F5F0;
+      --card: #FFFFFF;
+      --text-primary: #1A1A18;
+      --text-secondary: #6B6B67;
+      --text-muted: #9E9E9A;
+      --accent: #1A1A18;
+      --border: rgba(26,26,24,0.10);
+      --border-hover: rgba(26,26,24,0.25);
+      --tag-bg: #F0EDE6;
+      --tag-text: #4A4A46;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #131312;
+        --card: #1E1E1C;
+        --text-primary: #F0EDE6;
+        --text-secondary: #9E9E9A;
+        --text-muted: #6B6B67;
+        --accent: #F0EDE6;
+        --border: rgba(240,237,230,0.10);
+        --border-hover: rgba(240,237,230,0.28);
+        --tag-bg: #2A2A28;
+        --tag-text: #B0ADA6;
+      }
+    }
+
+    body {
+      font-family: 'DM Mono', monospace;
+      background: var(--bg);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 0.5px solid var(--border);
+      border-radius: 20px;
+      padding: 40px 32px 32px;
+      width: 100%;
+      max-width: 360px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--text-primary);
+    }
+
+    .avatar-wrap {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      flex-shrink: 0;
+      overflow: hidden; 
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; 
+      display: block;
+    }
+
+    .name-block {
+      padding-top: 2px;
+    }
+
+    .name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 22px;
+      color: var(--text-primary);
+      line-height: 1.15;
+      letter-spacing: -0.3px;
+    }
+
+    .role {
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    .divider {
+      border: none;
+      border-top: 0.5px solid var(--border);
+      margin: 0 0 24px;
+    }
+
+    .links {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .link-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      border: 0.5px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      color: var(--text-primary);
+      transition: border-color 0.18s, background 0.18s;
+      cursor: pointer;
+    }
+
+    .link-item:hover {
+      border-color: var(--border-hover);
+      background: var(--tag-bg);
+    }
+
+    .link-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--tag-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .link-icon svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .link-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .link-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      display: block;
+      margin-bottom: 1px;
+    }
+
+    .link-value {
+      font-size: 13px;
+      color: var(--text-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: block;
+    }
+
+    .link-arrow {
+      color: var(--text-muted);
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .vcf-btn {
+      margin-top: 16px;
+      width: 100%;
+      padding: 14px;
+      background: var(--text-primary);
+      color: var(--card);
+      border: none;
+      border-radius: 12px;
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: opacity 0.18s;
+      text-decoration: none;
+    }
+
+    .vcf-btn:hover { opacity: 0.82; }
+
+    .footer {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="avatar-wrap">
+      <div class="avatar">
+      <img src="logo.png" alt="Logo Mattia Amendola">
+    </div>
+      <div class="name-block">
+        <div class="name">Mattia Amendola</div>
+        <div class="role">Full Stack Developer</div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="links">
+      <a class="link-item" href="mailto:mattiaa.mendolaa@gmail.com">
+        <div class="link-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="4" width="20" height="16" rx="2"/>
+            <polyline points="2,4 12,13 22,4"/>
+          </svg>
+        </div>
+        <div class="link-text">
+          <span class="link-label">Email</span>
+          <span class="link-value">mattiaa.mendolaa@gmail.com</span>
+        </div>
+        <span class="link-arrow">↗</span>
+      </a>
+
+      <a class="link-item" href="https://ma-portfolio-three.vercel.app/" target="_blank" rel="noopener">
+        <div class="link-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+        </div>
+        <div class="link-text">
+          <span class="link-label">Portfolio</span>
+          <span class="link-value">ma-portfolio-three.vercel.app</span>
+        </div>
+        <span class="link-arrow">↗</span>
+      </a>
+
+      <a class="link-item" href="https://www.linkedin.com/in/mattia-amendola-726713307/" target="_blank" rel="noopener">
+        <div class="link-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+            <rect x="2" y="9" width="4" height="12"/>
+            <circle cx="4" cy="4" r="2"/>
+          </svg>
+        </div>
+        <div class="link-text">
+          <span class="link-label">LinkedIn</span>
+          <span class="link-value">mattia-amendola</span>
+        </div>
+        <span class="link-arrow">↗</span>
+      </a>
+
+      <a class="link-item" href="https://github.com/mattiaamendolaa-blip" target="_blank" rel="noopener">
+        <div class="link-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/>
+          </svg>
+        </div>
+        <div class="link-text">
+          <span class="link-label">GitHub</span>
+          <span class="link-value">mattiaamendolaa-blip</span>
+        </div>
+        <span class="link-arrow">↗</span>
+      </a>
+    </div>
+
+    <a class="vcf-btn" id="vcf-btn" href="#" onclick="downloadVCF(event)">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+        <polyline points="7 10 12 15 17 10"/>
+        <line x1="12" y1="15" x2="12" y2="3"/>
+      </svg>
+      Salva contatto
+    </a>
+
+    <div class="footer">mattiaa.mendolaa@gmail.com</div>
+  </div>
+
+  <script>
+    function downloadVCF(e) {
+      e.preventDefault();
+      const vcf = [
+        'BEGIN:VCARD',
+        'VERSION:3.0',
+        'FN:Mattia Amendola',
+        'N:Amendola;Mattia;;;',
+        'TITLE:Full Stack Developer',
+        'EMAIL;TYPE=INTERNET:mattiaa.mendolaa@gmail.com',
+        'URL;TYPE=Portfolio:https://ma-portfolio-three.vercel.app/',
+        'URL;TYPE=LinkedIn:https://www.linkedin.com/in/mattia-amendola-726713307/',
+        'URL;TYPE=GitHub:https://github.com/mattiaamendolaa-blip',
+        'END:VCARD'
+      ].join('\r\n');
+
+      const blob = new Blob([vcf], { type: 'text/vcard;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'mattia-amendola.vcf';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+  </script>
+
+</body>
+</html>
